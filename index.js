@@ -4,6 +4,7 @@ const { getLocationId } = require('./shopifyFunctions');
 const { updatePromoOpcionProducts } = require('./updatePromoopcion');
 const { updateInnovaProducts } = require('./updateInnova');
 const { updateForPromoProducts } = require('./updateForPromo');
+const { updateDobleVelaProducts } = require('./updateDobleVela');
 
 const vendors = require('./vendors.json');
 
@@ -14,9 +15,11 @@ async function updateProducts() {
         if (vendor.vendor === 'PROMO OPCION') {
             await updatePromoOpcionProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'INNOVA') {
-            // await updateInnovaProducts(locationId, vendor.products);
+            await updateInnovaProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'FOR PROMO') {
             await updateForPromoProducts(locationId, vendor.products);
+        } else if (vendor.vendor === 'DOBLE VELA') {
+            await updateDobleVelaProducts(locationId, vendor.products);
         }
     }
 }
