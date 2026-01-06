@@ -211,5 +211,15 @@
             "A2576",
             "A2577"
         ]
+    },
+    {
+        "vendor": "IMPRESSLINE",
+        "products": [
+            "MAL 206",
+            "MAL 223",
+            "MAL 116",
+            "ESC 526",
+            "TEC 102"
+        ]
     }
 ]

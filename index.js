@@ -5,6 +5,7 @@ const { updatePromoOpcionProducts } = require('./updatePromoopcion');
 const { updateInnovaProducts } = require('./updateInnova');
 const { updateForPromoProducts } = require('./updateForPromo');
 const { updateDobleVelaProducts } = require('./updateDobleVela');
+const { updateImpresslineProducts } = require('./updateImpressline');
 
 const vendors = require('./vendors.json');
 
@@ -20,6 +21,8 @@ async function updateProducts() {
             await updateForPromoProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'DOBLE VELA') {
             await updateDobleVelaProducts(locationId, vendor.products);
+        } else if (vendor.vendor === 'IMPRESSLINE') {
+            await updateImpresslineProducts(locationId, vendor.products);
         }
     }
 }
