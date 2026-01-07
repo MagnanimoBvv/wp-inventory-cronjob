@@ -7,7 +7,7 @@ async function getInnovaProducts(page) {
         {
             params: {
                 User: process.env.INNOVA_USER,
-                Clave: process.env.INNOVA_PASSWORD,
+                Clave: process.env.INNOVA_PASS,
                 page,
                 limit: 300,
             },

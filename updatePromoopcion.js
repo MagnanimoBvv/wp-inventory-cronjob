@@ -5,8 +5,8 @@ async function getPromoOpcionProducts() {
     const response = await axios.post(
         'https://promocionalesenlinea.net/api/all-products',
         JSON.stringify({
-            user: process.env.USER_PO,
-            password: process.env.PASSWORD_PO,
+            user: process.env.PO_USER,
+            password: process.env.PO_PASS,
         }), {
             headers: {
                 'Content-Type': 'application/json',
@@ -21,8 +21,8 @@ async function getVariantInventory(sku) {
     const response = await axios.post(
         'https://promocionalesenlinea.net/api/all-stocks',
         JSON.stringify({
-            user: process.env.USER_PO,
-            password: process.env.PASSWORD_PO,
+            user: process.env.PO_USER,
+            password: process.env.PO_PASS,
             sku,
         }), {
             headers: {
