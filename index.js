@@ -1,4 +1,3 @@
-const axios = require('axios');
 require('dotenv').config();
 const { getLocationId } = require('./shopifyFunctions');
 const { updatePromoOpcionProducts } = require('./updatePromoopcion');
@@ -7,6 +6,7 @@ const { updateForPromoProducts } = require('./updateForPromo');
 const { updateDobleVelaProducts } = require('./updateDobleVela');
 const { updateImpresslineProducts } = require('./updateImpressline');
 const { updateG4Products } = require('./updateG4');
+const { updateCdoProducts } = require('./updateCdo');
 
 const vendors = require('./vendors.json');
 
@@ -26,6 +26,8 @@ async function updateProducts() {
             await updateImpresslineProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'G4') {
             await updateG4Products(locationId, vendor.products);
+        } else if (vendor.vendor === 'CDO') {
+            await updateCdoProducts(locationId, vendor.products);
         }
     }
 }
