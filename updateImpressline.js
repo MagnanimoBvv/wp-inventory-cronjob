@@ -71,14 +71,13 @@ async function updateImpresslineProducts(locationId, selectedKeys) {
 
             const shopifyVariants = shopifyProduct.variants.nodes;
             for (const vendorVariant of vendorVariants) {
-                const color = vendorVariant.color;
-                const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === color);
+                const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === vendorVariant.color);
 
                 const variantInventory = vendorVariant.stock;
-                console.log(`Inventario color ${color}: ${variantInventory}`);
+                console.log(`Inventario color ${vendorVariant.color}: ${variantInventory}`);
 
                 for (const variant of colorVariants) {
-                    const variantQuantity = parseFloat(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
+                    const variantQuantity = parseInt(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
                     const newQuantity = variantInventory >= variantQuantity ? 1 : 0;
                     console.log(`Variante encontrada: ${shopifyProduct.title} ${variant.title} Inventario: Prev ${variant.inventoryQuantity} Now ${newQuantity}`);
                     if (variant.inventoryQuantity !== newQuantity) {
@@ -98,7 +97,7 @@ async function updateImpresslineProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.NOMBRE}:`, error);
+            console.error(`Error actualizando el producto ${product.name} ${product.model}:`, error);
         }
     }
 }

@@ -28,7 +28,7 @@ async function updateForPromoProducts(locationId, selectedKeys) {
                 console.log(`Inventario color ${vendorVariant.color}: ${variantInventory}`);
 
                 for (const variant of colorVariants) {
-                    const variantQuantity = parseFloat(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
+                    const variantQuantity = parseInt(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
                     const newQuantity = variantInventory >= variantQuantity ? 1 : 0;
                     console.log(`Variante encontrada: ${shopifyProduct.title} ${variant.title} Inventario: Prev ${variant.inventoryQuantity} Now ${newQuantity}`);
                     if (variant.inventoryQuantity !== newQuantity) {

@@ -55,11 +55,11 @@ async function updateInnovaProducts(locationId, selectedKeys) {
             for (const vendorVariant of vendorVariants) {
                 const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === vendorVariant.Tono);
 
-                const variantInventory = parseFloat(vendorVariant.Stock);
+                const variantInventory = parseInt(vendorVariant.Stock);
                 console.log(`Inventario color ${vendorVariant.Tono}: ${variantInventory}`);
 
                 for (const variant of colorVariants) {
-                    const variantQuantity = parseFloat(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
+                    const variantQuantity = parseInt(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
                     const newQuantity = variantInventory >= variantQuantity ? 1 : 0;
                     console.log(`Variante encontrada: ${shopifyProduct.title} ${variant.title} Inventario: Prev ${variant.inventoryQuantity} Now ${newQuantity}`);
                     if (variant.inventoryQuantity !== newQuantity) {
