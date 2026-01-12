@@ -360,5 +360,11 @@
             "BP300",
             "BP329"
         ]
+    },
+    {
+        "vendor": "IUSB",
+        "products": [
+            "COM001-SIN"
+        ]
     }
 ]
