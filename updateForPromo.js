@@ -13,6 +13,7 @@ async function updateForPromoProducts(locationId, selectedKeys) {
     const responseProducts = await getForPromoProducts();
 
     for (const key of selectedKeys) {
+        if (['BL 058'].includes(key)) continue;
         const vendorVariants = responseProducts.filter(p => p.id_articulo === key);
         const product = vendorVariants[0];
         try {
