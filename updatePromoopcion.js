@@ -78,7 +78,7 @@ async function updatePromoOpcionProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.nombrePadre} ${product.skuPadre}:`, error);
+            console.error(`Error actualizando el producto ${key} de PromoOpcion:`, error);
         }
     }
 }

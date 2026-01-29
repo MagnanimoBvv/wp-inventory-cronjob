@@ -49,7 +49,7 @@ async function updateIusbProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.nombre} ${key}:`, error);
+            console.error(`Error actualizando el producto ${key} de IUSB:`, error);
         }
     }
 }

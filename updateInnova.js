@@ -79,7 +79,7 @@ async function updateInnovaProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.Nombre} ${product.Codigo}:`, error);
+            console.error(`Error actualizando el producto ${key} de Innova:`, error);
         }
     }
 }

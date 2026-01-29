@@ -87,7 +87,7 @@ async function updateG4Products(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.nombre_producto} ${key}:`, error);
+            console.error(`Error actualizando el producto ${key} de G4:`, error);
         }
     }
 }

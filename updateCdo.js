@@ -53,7 +53,7 @@ async function updateCdoProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.name} ${product.code}:`, error);
+            console.error(`Error actualizando el producto ${key} de CDO:`, error);
         }
     }
 }

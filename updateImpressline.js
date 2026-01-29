@@ -97,7 +97,7 @@ async function updateImpresslineProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.name} ${product.model}:`, error);
+            console.error(`Error actualizando el producto ${key} de Impressline:`, error);
         }
     }
 }

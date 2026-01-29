@@ -48,7 +48,7 @@ async function updateForPromoProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.nombre_articulo} ${product.id_articulo}:`, error);
+            console.error(`Error actualizando el producto ${key} de ForPromo:`, error);
         }
     }
 }

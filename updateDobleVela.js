@@ -62,7 +62,7 @@ async function updateDobleVelaProducts(locationId, selectedKeys) {
                 }
             }
         } catch (error) {
-            console.error(`Error actualizando el producto ${product.NOMBRE}:`, error);
+            console.error(`Error actualizando el producto ${key} de Doble Vela:`, error);
         }
     }
 }
