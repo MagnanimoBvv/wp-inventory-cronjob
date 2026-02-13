@@ -1,80 +1,45 @@
 const axios = require('axios');
-const cheerio = require('cheerio');
 const { getProductByHandle, updateInventory } = require('./shopifyFunctions');
 
-const urls = {
-    'MAL 206': 'https://www.impressline.com.mx/back-packs-subcat/backpack-bikila-mal-206',
-    'MAL 223': 'https://www.impressline.com.mx/back-packs-subcat/cangurera-o-neal-mal-223',
-    'MAL 116': 'https://www.impressline.com.mx/hieleras-y-porta-bebidas-subcat/lonchera-evans-mal-116',
-    'ESC 526': 'https://www.impressline.com.mx/escritorio-premium-libretas-subcat/libreta-alcala-esc-526',
-    'TEC 102': 'https://www.impressline.com.mx/porta-ipads/mousepad-planck-tec-102',
+const handles = {
+    'MAL 206': 'backpack-bikila-mal-206',
+    'MAL 223': 'cangurera-o-neal-mal-223',
+    'MAL 116': 'lonchera-evans-mal-116',
+    'ESC 526': 'libreta-alcala-esc-526',
+    'TEC 102': 'mousepad-planck-tec-102',
 }
 
-async function getDomFromUrl(url) {
-    const response = await axios.get(url, {
-        headers: {
-            'User-Agent':
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36',
-            'Accept-Language': 'es-MX,es;q=0.9,en;q=0.8',
-        },
-        timeout: 15000,
-    });
+async function getImpresslineProducts() {
+    const response = await axios.get(
+            'https://www.impressline.com.mx/api/v1/stocks',
+            {
+                headers: {
+                    'Authorization': `Bearer ${process.env.ILN_AUTH_TOKEN}`
+                }
+            }
+        );
 
-    const html = response.data;
-    const $ = cheerio.load(html);
-
-    return $;
-}
-
-async function processData(key) {
-    const url = urls[key];
-    const $ = await getDomFromUrl(url);
-
-    const specs = {};
-    $('tr.tr-table-specs').each((_, tr) => {
-        const key = $(tr).find('td').first().text().trim().replace(':', '');
-        const value = $(tr).find('td').last().text().trim();
-
-        specs[key] = value;
-    });
-
-    const name = specs['Nombre'];
-    const model = specs['Clave'];
-
-    const colors = $('.color-chooser .product-color-option')
-        .map((_, el) => {
-            const color = $(el).find('.color-name').text().trim().toUpperCase();
-            const stock = parseInt(
-                $(el).find('.stock-label-product-mini').text().trim(),
-                10
-            );
-
-            return { color, stock };
-        })
-        .get();
-
-    return {
-        name,
-        model,
-        colors,
-    };
+        return response.data;
 }
 
 async function updateImpresslineProducts(locationId, selectedKeys) {
+    const responseProducts = await getImpresslineProducts();
+    const products = responseProducts.data;
+
     for (const key of selectedKeys) {
-        const product = await processData(key);
-        const vendorVariants = product.colors;
+        const vendorVariants = products.filter(p => p.clave.startsWith(key));
         try {
             // if (key !== 'MAL 206') continue; // If para pruebas con un producto específico
-            const handle = `${product.name} ${product.model}`.toLowerCase().replace(/['’\s]+/g, '-'); // Reemplaza espacios y apóstrofes
+            const handle = handles[key];
             const shopifyProduct = await getProductByHandle(handle);
 
             const shopifyVariants = shopifyProduct.variants.nodes;
             for (const vendorVariant of vendorVariants) {
-                const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === vendorVariant.color);
+                const color = vendorVariant.nombre.split(' - ')[1].toUpperCase();
+                const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === color);
 
                 const variantInventory = vendorVariant.stock;
-                console.log(`Inventario color ${vendorVariant.color}: ${variantInventory}`);
+                console.log(`Inventario color ${color}: ${variantInventory}`);
 
                 for (const variant of colorVariants) {
                     const variantQuantity = parseInt(variant.selectedOptions.find(v => v.name === 'Cantidad').value);
