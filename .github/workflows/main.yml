@@ -2,9 +2,9 @@ name: Update Products Cronjob
 
 on:
   schedule:
-    - cron: "5 14 * * *"
-    - cron: "5 18 * * *"
-    - cron: "5 23 * * *"
+    - cron: "30 15 * * *"
+    - cron: "30 19 * * *"
+    - cron: "30 23 * * *"
   workflow_dispatch:
 
 jobs:
