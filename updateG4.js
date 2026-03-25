@@ -133,7 +133,7 @@ async function updateG4Products(locationId, selectedKeys) {
     const responseProducts = await getG4Products();
 
     for (const key of selectedKeys) {
-        if (['lib-fab', 'tap-duo-lli', 'usb-tec', 'jet-met', 'set-pop'].includes(key)) continue;
+        if (['lib-fab', 'tap-duo-lli', 'usb-tec', 'set-pop'].includes(key)) continue;
         const vendorVariants = responseProducts.filter(p => p.codigo_producto.startsWith(key));
         try {
             // if (key !== 'BP-235') continue; // If para pruebas con un producto específico
