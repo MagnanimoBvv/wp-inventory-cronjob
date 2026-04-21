@@ -17,8 +17,8 @@ async function updateProducts() {
         // if (vendor.vendor !== 'FOR PROMO') continue;
         if (vendor.vendor === 'PROMO OPCION') {
             await updatePromoOpcionProducts(locationId, vendor.products);
-        } else if (vendor.vendor === 'INNOVA') {
-            await updateInnovaProducts(locationId, vendor.products);
+        // } else if (vendor.vendor === 'INNOVA') {
+        //     await updateInnovaProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'FOR PROMO') {
             await updateForPromoProducts(locationId, vendor.products);
         } else if (vendor.vendor === 'DOBLE VELA') {
