@@ -9,7 +9,7 @@ const { updateG4Products } = require('./updateG4');
 const { updateCdoProducts } = require('./updateCdo');
 const { updateIusbProducts } = require('./updateIusb');
 
-const vendors = require('./vendors.json');
+const vendors = require('./vendors.js');
 
 async function updateProducts() {
     const locationId = await getLocationId();

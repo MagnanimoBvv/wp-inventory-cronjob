@@ -1,7 +1,7 @@
-[
+const vendors = [
     {
-        "vendor": "INNOVA",
-        "products": [
+        vendor: "INNOVA",
+        products: [
             "TE-045",
             "TE-063",
             "TE-075",
@@ -42,18 +42,18 @@
         ]
     },
     {
-        "vendor": "PROMO OPCION",
-        "products": [
+        vendor: "PROMO OPCION",
+        products: [
             "SIN 255",
             "SIN 245",
             "SIN 200",
             "SIN 160",
             "SIN 937",
             "SIN 495",
-            "SIN 190",
+            // "SIN 190",
             "SIN 412",
             "SIN 413",
-            "SIN 063",
+            // "SIN 063",
             "SIN 998",
             "SIN 712",
             "SIN 271",
@@ -72,7 +72,7 @@
             "ANF 070",
             "TMPS 103",
             "TMPS 186",
-            "TMPS 143",
+            // "TMPS 143",
             "TMPS 164",
             "TMPS 159",
             "TMPS 180",
@@ -80,7 +80,7 @@
             "TMPS 148",
             "SIN 114-",
             "SIN 902-",
-            "SIN 293",
+            // "SIN 293",
             "SIN 521",
             "SIN 416",
             "SIN 616",
@@ -124,15 +124,15 @@
             "ECO 090",
             "SH 1280",
             "SH 8015",
-            "SH 1005",
+            // "SH 1005",
             "SH 3070",
             "RQ 1161",
             "RQ 1145"
         ]
     },
     {
-        "vendor": "FOR PROMO",
-        "products": [
+        vendor: "FOR PROMO",
+        products: [
             "T 173",
             "T 18",
             "T 192",
@@ -152,7 +152,7 @@
             "T 301",
             "BL 134",
             "BL 103",
-            "BL 172",
+            // "BL 172",
             "BL 099",
             "BL 277",
             "LON 065",
@@ -162,7 +162,7 @@
             "BL 310",
             "BL 265",
             "BL 233",
-            "BL 058",
+            // "BL 058",
             "BL 001",
             "LE 062",
             "O 125",
@@ -189,8 +189,8 @@
         ]
     },
     {
-        "vendor": "DOBLE VELA",
-        "products": [
+        vendor: "DOBLE VELA",
+        products: [
             "A2659",
             "A2661",
             "A2911",
@@ -216,8 +216,8 @@
         ]
     },
     {
-        "vendor": "IMPRESSLINE",
-        "products": [
+        vendor: "IMPRESSLINE",
+        products: [
             "MAL 206",
             "MAL 223",
             "MAL 116",
@@ -226,12 +226,12 @@
         ]
     },
     {
-        "vendor": "G4",
-        "products": [
+        vendor: "G4",
+        products: [
             "moc-dai",
             "anf-lin",
             "vas-ven",
-            "set-pop",
+            // "set-pop",
             "anf-cav",
             "anf-tan",
             "ter-kri",
@@ -260,7 +260,7 @@
             "lin-san",
             "lib-pea",
             "lib-tre",
-            "lib-fab",
+            // "lib-fab",
             "lib-skd",
             "lib-skb",
             "lib-sks",
@@ -275,10 +275,10 @@
             "lib-rok",
             "lib-pok",
             "car-skc",
-            "tap-duo-lli",
+            // "tap-duo-lli",
             "set-rec",
             "set-re2",
-            "usb-tec",
+            // "usb-tec",
             "lum-al4",
             "pce-tec",
             "kbi-son",
@@ -313,8 +313,8 @@
         ]
     },
     {
-        "vendor": "CDO",
-        "products": [
+        vendor: "CDO",
+        products: [
             "K11",
             "T669",
             "T625",
@@ -357,7 +357,7 @@
             "T638",
             "BP299",
             "BP286",
-            "BP282",
+            // "BP282",
             "BP255",
             "BP327",
             "BP322",
@@ -366,9 +366,11 @@
         ]
     },
     {
-        "vendor": "IUSB",
-        "products": [
+        vendor: "IUSB",
+        products: [
             "COM001-SIN"
         ]
     }
-]
+];
+
+module.exports = vendors;

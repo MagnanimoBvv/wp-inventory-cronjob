@@ -6,7 +6,7 @@ const handles = {
     "moc-dai": "mochila-takayama-daily-pack-moc-dai",
     "anf-lin": "anfora-link-anf-lin",
     "vas-ven": "vaso-venti-vas-ven",
-    "set-pop": "",
+    // "set-pop": "",
     "anf-cav": "anfora-cava-anf-cav",
     "anf-tan": "anfora-tanker-anf-tan",
     "ter-kri": "termo-krypton-ter-kri",
@@ -35,7 +35,7 @@ const handles = {
     "lin-san": "linterna-sante-lin-san",
     "lib-pea": "libreta-peach-lib-pea",
     "lib-tre": "libreta-trend-lib-tre",
-    "lib-fab": "",
+    // "lib-fab": "",
     "lib-skd": "libreta-skin-dots-lib-skd",
     "lib-skb": "libreta-skin-box-lib-skb",
     "lib-sks": "libreta-skin-soft-lib-sks",
@@ -50,10 +50,10 @@ const handles = {
     "lib-rok": "libreta-rock-lib-rok",
     "lib-pok": "libreta-pocket-lib-pok",
     "car-skc": "carpeta-skin-congress-car-skc",
-    "tap-duo-lli": "",
+    // "tap-duo-lli": "",
     "set-rec": "set-de-recaditos-set-rec",
     "set-re2": "set-de-recaditos-2-set-re2",
-    "usb-tec": "",
+    // "usb-tec": "",
     "lum-al4": "power-bank-lumina-4-lum-al4",
     "pce-tec": "porta-celular-tech-pce-tec",
     "kbi-son": "boligrafo-koi-bio-tinta-negra-kbi-son",
@@ -74,7 +74,7 @@ const handles = {
     "dak-roc": "boligrafo-dakar-rock-dak-roc",
     "sha-met": "boligrafo-sharp-sha-met",
     "bol-met": "boligrafo-bold-bol-met",
-    "jet-met": "",
+    "jet-met": "boligrafo-jet-jet-met",
     "ari-met": "boligrafo-aria-ari-met",
     "cen-met": "boligrafo-century-cen-met",
     "dak-met": "boligrafo-dakar-dak-met",
@@ -133,7 +133,6 @@ async function updateG4Products(locationId, selectedKeys) {
     const responseProducts = await getG4Products();
 
     for (const key of selectedKeys) {
-        if (['lib-fab', 'tap-duo-lli', 'usb-tec', 'set-pop'].includes(key)) continue;
         const vendorVariants = responseProducts.filter(p => p.codigo_producto.startsWith(key));
         try {
             // if (key !== 'BP-235') continue; // If para pruebas con un producto específico

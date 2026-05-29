@@ -16,7 +16,6 @@ async function getCdoProduct(code) {
 
 async function updateCdoProducts(locationId, selectedKeys) {
     for (const key of selectedKeys) {
-        if (['BP282'].includes(key)) continue;
         const product = await getCdoProduct(key);
         const vendorVariants = product.variants;
         try {
