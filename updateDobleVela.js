@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getProductByHandle, updateInventory } = require('./shopifyFunctions');
+const { getProductByHandle, updateInventory, updateVariants, applyRestockTag } = require('./shopifyFunctions');
 
 const warehouses = [
     'Disponible Almacen 7',
@@ -33,10 +33,23 @@ async function updateDobleVelaProducts(locationId, selectedKeys) {
             const handle = `${product.NOMBRE.slice(0, product.NOMBRE.indexOf(product.MODELO) + product.MODELO.length).trim().toLowerCase().replace(/[.,]/g, '').replace(/[\s]+/g, '-')}`; // Quita comas y puntos y reemplaza espacios
             const shopifyProduct = await getProductByHandle(handle);
 
+            let restocked = false; // Se vuelve true si alguna variante sube de inventario
             const shopifyVariants = shopifyProduct.variants.nodes;
             for (const vendorVariant of vendorVariants) {
                 const color = vendorVariant.COLOR.split(' - ')[1];
                 const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === color);
+
+                // for (const variant of colorVariants) {
+                //     const variantToUpdate = {
+                //         id: variant.id,
+                //         inventoryItem: {
+                //             sku: vendorVariant.CLAVE,
+                //         },
+                //     }
+                //     const response = await updateVariants(shopifyProduct.id, [variantToUpdate]);
+                //     console.log('Variante actualizada:', response);
+                // }
+                // continue;
 
                 const variantInventory = warehouses.reduce((acum, warehouse) => acum + vendorVariant[warehouse], 0); // Suma el inventario de todas las ubicaciones
                 console.log(`Inventario color ${color}: ${variantInventory}`);
@@ -46,6 +59,7 @@ async function updateDobleVelaProducts(locationId, selectedKeys) {
                     const newQuantity = variantInventory >= variantQuantity ? 1 : 0;
                     console.log(`Variante encontrada: ${shopifyProduct.title} ${variant.title} Inventario: Prev ${variant.inventoryQuantity} Now ${newQuantity}`);
                     if (variant.inventoryQuantity !== newQuantity) {
+                        if (newQuantity > variant.inventoryQuantity) restocked = true;
                         const variantToUpdate = {
                             quantities: {
                                 inventoryItemId: variant.inventoryItem.id,
@@ -61,6 +75,8 @@ async function updateDobleVelaProducts(locationId, selectedKeys) {
                     }
                 }
             }
+
+            await applyRestockTag(shopifyProduct, restocked);
         } catch (error) {
             console.error(`Error actualizando el producto ${key} de Doble Vela:`, error);
         }

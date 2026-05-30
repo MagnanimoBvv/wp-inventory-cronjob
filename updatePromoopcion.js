@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getProductByHandle, updateInventory } = require('./shopifyFunctions');
+const { getProductByHandle, updateInventory, updateVariants, applyRestockTag } = require('./shopifyFunctions');
 
 async function getPromoOpcionProducts() {
     const response = await axios.post(
@@ -49,9 +49,22 @@ async function updatePromoOpcionProducts(locationId, selectedKeys) {
             const handle = `${product.nombrePadre} ${product.skuPadre}`.trim().toLowerCase().replace(/[\s/]+/g, '-').replace(/-+$/g, ''); // Reemplaza espacios y diagonales y quita guiones al final
             const shopifyProduct = await getProductByHandle(handle);
 
+            let restocked = false; // Se vuelve true si alguna variante sube de inventario
             const shopifyVariants = shopifyProduct.variants.nodes;
             for (const vendorVariant of vendorVariants) {
                 const colorVariants = shopifyVariants.filter(v => v.selectedOptions.find(v => v.name === 'Color').value === vendorVariant.color);
+
+                // for (const variant of colorVariants) {
+                //     const variantToUpdate = {
+                //         id: variant.id,
+                //         inventoryItem: {
+                //             sku: vendorVariant.skuHijo,
+                //         },
+                //     }
+                //     const response = await updateVariants(shopifyProduct.id, [variantToUpdate]);
+                //     console.log('Variante actualizada:', response);
+                // }
+                // continue;
 
                 const responseInventory = await getVariantInventory(vendorVariant.skuHijo);
                 const variantInventory = responseInventory.Stocks.reduce((acum, item) => acum + item.Stock, 0); // Suma el inventario de todas las ubicaciones
@@ -62,6 +75,7 @@ async function updatePromoOpcionProducts(locationId, selectedKeys) {
                     const newQuantity = variantInventory >= variantQuantity ? 1 : 0;
                     console.log(`Variante encontrada: ${shopifyProduct.title} ${variant.title} Inventario: Prev ${variant.inventoryQuantity} Now ${newQuantity}`);
                     if (variant.inventoryQuantity !== newQuantity) {
+                        if (newQuantity > variant.inventoryQuantity) restocked = true;
                         const variantToUpdate = {
                             quantities: {
                                 inventoryItemId: variant.inventoryItem.id,
@@ -77,6 +91,8 @@ async function updatePromoOpcionProducts(locationId, selectedKeys) {
                     }
                 }
             }
+
+            await applyRestockTag(shopifyProduct, restocked);
         } catch (error) {
             console.error(`Error actualizando el producto ${key} de PromoOpcion:`, error);
         }
