@@ -1,6 +1,38 @@
 const axios = require('axios');
 const { getProductByHandle, updateInventory, updateVariants, applyRestockTag } = require('./shopifyFunctions');
 
+const handles = {
+    'A2659': 'maletín-porta-laptop-royal-a2659',
+    'A2661': 'maletin-porta-laptop-wayne-a2661',
+    'A2911': 'portalaptop-de-poliester-300d-office-a2911',
+    'A2943': 'cangurera-deportiva-impermeable-jump-a2943',
+    'A3116': 'bolsa-de-poliéster-con-asas-de-algodón-olivo-a3116',
+    'A2922': 'libreta-con-cierre-zipper-a2922',
+    'A2672': 'libreta-personal-a5-milan-a2672',
+    'A3028': 'lámpara-de-escritorio-con-sensor-touch-dinner-a3028',
+    'SLK13': 'portagafete-de-hilo-elastico-frank-slk13',
+    'CC4261': 'calculadora-cordon-rec-cc4261',
+    'A3139': 'batería-de-carga-rápida-cap-5000-mah-elegant-a3139',
+    'A3137': 'batería-de-carga-rápida-cap-5000-mah-elixir-a3137',
+    'A2899': 'antiestrés-de-martillo-hammer-a2899',
+    'A2364': 'rompecabezas-planer-a2364',
+    'A2365': 'rompecabezas-fish-a2365',
+    'A2366': 'cubo-de-madera-7-piezas-sonri-a2366',
+    'A3096': 'bolígrafo-de-plástico-multi-tintas-arcoíris-a3096',
+    'BLP4189': 'bolígrafo-de-plástico-multi-tintas-bakú-blp4189',
+    'A2955': 'boligrafo-de-aluminio-verdi-a2955',
+    'TAC2310': 'tabla-con-calculadora-asentia-tac2310',
+    'A2576': 'porta-documentos-de-plastico-secret-a2576',
+    'A2577': 'tabla-de-madera-mdf-miles-a2577',
+    'A3194': 'bolsa-de-poliéster-repelente-al-agua-keyla-a3194',
+    'A2113': 'bolígrafo-de-aluminio-con-touch-oddra-a2113',
+    'A2894': 'lampara-plegable-con-bateria-portatil-cap-1200-mah-pixar-a2894',
+    'A2221': 'set-de-papeleria-trim-a2221',
+    'A3097': 'libreta-a5-con-correa-mágnetica-bethoven-a3097',
+    'A2490': 'muneco-de-peluche-oso-felpi-a2490',
+    'A2543': 'muneco-de-peluche-oso-bubu-a2543',
+}
+
 const warehouses = [
     'Disponible Almacen 7',
     'Disponible Almacen 9',
@@ -26,11 +58,10 @@ async function getDobleVelaProduct(code) {
 async function updateDobleVelaProducts(locationId, selectedKeys) {
     for (const key of selectedKeys) {
         const response = await getDobleVelaProduct(key);
-        const vendorVariants = response.Resultado
-        const product = vendorVariants[0];
+        const vendorVariants = response.Resultado;
         try {
             // if (key !== 'A2659') continue; // If para pruebas con un producto específico
-            const handle = `${product.NOMBRE.slice(0, product.NOMBRE.indexOf(product.MODELO) + product.MODELO.length).trim().toLowerCase().replace(/[.,]/g, '').replace(/[\s]+/g, '-')}`; // Quita comas y puntos y reemplaza espacios
+            const handle = handles[key];
             const shopifyProduct = await getProductByHandle(handle);
 
             let restocked = false; // Se vuelve true si alguna variante sube de inventario
